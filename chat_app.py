@@ -10,7 +10,7 @@ rooms = {}
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('chat.html')
 
 @app.route('/register', methods=['POST'])
 def register():
@@ -53,4 +53,3 @@ def handle_leave_room_event(data):
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=80, debug=True)
-
