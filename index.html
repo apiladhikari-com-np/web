@@ -3,44 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Download Button</title>
+    <title>CCTV Camera Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background: linear-gradient(120deg, #f3ec78, #af4261);
+            margin: 0;
+            padding: 0;
+            background-color: #222;
             color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        h1 {
-            font-size: 2.5em;
+
+        .login-container {
+            background-color: #333;
+            border: 1px solid #555;
+            border-radius: 10px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-container h2 {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .download-btn {
-            text-decoration: none;
+
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
         }
-        .download-btn button {
-            background: #4caf50;
-            color: white;
-            font-size: 1.2em;
-            padding: 15px 30px;
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #222;
+            color: #fff;
+        }
+
+        .login-container input:focus {
+            border-color: #1e90ff;
+            outline: none;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1e90ff;
             border: none;
-            border-radius: 25px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        .download-btn button:hover {
-            background: #45a049;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+
+        .login-container button:hover {
+            background-color: #005bbb;
+        }
+
+        .login-container .footer {
+            text-align: center;
+            font-size: 12px;
+            margin-top: 10px;
+            color: #888;
         }
     </style>
+    <script>
+        function validateLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'nonabinarai' && password === 'guru@34') {
+                window.location.href = 'video.html';
+            } else {
+                alert('Invalid credentials! Please try again.');
+            }
+        }
+    </script>
 </head>
 <body>
-    <!-- Welcoming Sentence -->
-    <h1>Welcome</h1>
+    <div class="login-container">
+        <h2>CCTV Camera Login</h2>
+        <form onsubmit="validateLogin(event)">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
 
-<!--   -->
-    </a>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="footer">
+            <p>&copy; 2024 CCTV Monitoring System</p>
+        </div>
+    </div>
 </body>
 </html>
