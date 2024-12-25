@@ -74,19 +74,7 @@
             color: #888;
         }
     </style>
-    <script>
-        function validateLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === 'nonabinarai' && password === 'guru@34') {
-                window.location.href = 'video.html';
-            } else {
-                alert('Invalid credentials! Please try again.');
-            }
-        }
-    </script>
+    <script src="login.js" defer></script>
 </head>
 <body>
     <div class="login-container">
