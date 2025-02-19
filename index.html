@@ -1,153 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simple Endless Runner</title>
-  <style>
-    /* Basic reset and background */
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: #87ceeb; /* light blue sky */
-      font-family: sans-serif;
-    }
-
-    /* Center the canvas */
-    #gameCanvas {
-      display: block;
-      margin: 0 auto;
-      background: #ccc; /* light grey background for the canvas */
-      border: 2px solid #333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LudoJS Tutorial</title>
+    <link rel="stylesheet" href="./ludo/style.css">
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div class="ludo-container">
+        <div class="ludo">
+            <div class="player-pieces">
+                <div class="player-piece" player-id="P1" piece="0"></div>
+                <div class="player-piece" player-id="P1" piece="1"></div>
+                <div class="player-piece" player-id="P1" piece="2"></div>
+                <div class="player-piece" player-id="P1" piece="3"></div>
+                
+                <div class="player-piece" player-id="P2" piece="0"></div>
+                <div class="player-piece" player-id="P2" piece="1"></div>
+                <div class="player-piece" player-id="P2" piece="2"></div>
+                <div class="player-piece" player-id="P2" piece="3"></div>
+            </div>
 
-  <script>
-    // Get the canvas and context
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
+            <div class="player-bases">
+                <div class="player-base" player-id="P1"></div>
+                <div class="player-base" player-id="P2"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="row">
+                <button id="dice-btn" class="btn btn-dice">Roll</button>
+                <div class="dice-value"></div>
+                <button id="reset-btn" class="btn btn-reset">Reset</button>
+            </div>
+            <h2 class="active-player">Active Player: <span></span> </h2>
+        </div>
+    </div>
 
-    // Game settings
-    let gameSpeed = 5;
-    let gravity = 0.5;
-    let frameCount = 0;
-    let animationId;
-
-    // Player definition (a simple rectangle)
-    const player = {
-      x: 50,
-      y: canvas.height - 60, // starting above the ground
-      width: 30,
-      height: 50,
-      dy: 0,
-      jumpForce: 12,
-      grounded: false,
-      jump() {
-        if (this.grounded) {
-          this.dy = -this.jumpForce;
-          this.grounded = false;
-        }
-      },
-      update() {
-        this.dy += gravity;
-        this.y += this.dy;
-
-        // Check if player hits the ground (ground is drawn 10px from the bottom)
-        if (this.y + this.height >= canvas.height - 10) {
-          this.y = canvas.height - 10 - this.height;
-          this.dy = 0;
-          this.grounded = true;
-        }
-      },
-      draw() {
-        ctx.fillStyle = 'red';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-    };
-
-    // Obstacle class for the game
-    class Obstacle {
-      constructor() {
-        this.width = 20 + Math.random() * 30; // random width between 20 and 50
-        this.height = 20 + Math.random() * 30; // random height between 20 and 50
-        this.x = canvas.width;
-        this.y = canvas.height - 10 - this.height;
-      }
-      update() {
-        this.x -= gameSpeed;
-        this.draw();
-      }
-      draw() {
-        ctx.fillStyle = 'green';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-      }
-    }
-
-    // Array to hold obstacles
-    let obstacles = [];
-
-    // Function to spawn obstacles periodically
-    function spawnObstacle() {
-      obstacles.push(new Obstacle());
-    }
-
-    // The main game loop
-    function animate() {
-      // Clear the canvas for the new frame
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw the ground (a simple rectangle)
-      ctx.fillStyle = '#654321'; // brown color for the ground
-      ctx.fillRect(0, canvas.height - 10, canvas.width, 10);
-
-      // Update and draw the player
-      player.update();
-      player.draw();
-
-      // Spawn obstacles every 100 frames (you can adjust this for difficulty)
-      if (frameCount % 100 === 0) {
-        spawnObstacle();
-      }
-
-      // Update obstacles, check for collisions, and remove off-screen obstacles
-      obstacles.forEach((obs, index) => {
-        obs.update();
-
-        // Remove obstacle if it goes off-screen
-        if (obs.x + obs.width < 0) {
-          obstacles.splice(index, 1);
-        }
-
-        // Simple collision detection
-        if (
-          player.x < obs.x + obs.width &&
-          player.x + player.width > obs.x &&
-          player.y < obs.y + obs.height &&
-          player.y + player.height > obs.y
-        ) {
-          // Collision detected - stop the game
-          cancelAnimationFrame(animationId);
-          alert("Game Over!");
-        }
-      });
-
-      frameCount++;
-      animationId = requestAnimationFrame(animate);
-    }
-
-    // Start the game loop
-    animationId = requestAnimationFrame(animate);
-
-    // Listen for key presses to allow the player to jump
-    window.addEventListener('keydown', (e) => {
-      if (e.code === 'Space' || e.code === 'ArrowUp') {
-        player.jump();
-      }
-    });
-  </script>
+    <script src="./main.js" type="module"></script>
 </body>
 </html>
