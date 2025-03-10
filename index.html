@@ -3,92 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Location Tracker</title>
+    <title>User Info & Location</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 30px;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 18px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-        .info {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            margin-top: 15px;
-        }
-        #map {
-            width: 80%;
-            height: 300px;
-            margin: 20px auto;
-            border: 2px solid #ccc;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 20px; }
+        button { padding: 10px 15px; font-size: 16px; cursor: pointer; }
+        .info { font-size: 16px; font-weight: bold; margin-top: 10px; }
+        #map { width: 80%; height: 300px; margin: 20px auto; border: 2px solid #ccc; }
+        #location-info { display: none; }
+        #popup-container { display: block; }
     </style>
 </head>
 <body>
+        <!-- Popup asking about "Apil Adhikari" -->
+    <div id="popup-container">
+        <p>Do you know Apil Adhikari?</p>
+        <button onclick="requestLocation()">Yes</button>
+    </div>
 
-    <h2>Live Location Tracker</h2>
-    <button onclick="getLocation()">Get Real-time Location</button>
+    <div id="weather-container">
+        <h3>🌤️ Live Weather Update:</h3>
+        <p id="weather">Fetching weather data...</p>
+    </div>
+    
+    <!-- Location Information Section (Initially hidden) -->
+    <div id="location-info" style="display: none; color: white;">
+        <p class="info">Public IP: <span id="publicIP">Fetching...</span></p>
+        <p class="info">Local IP: <span id="localIP">Fetching...</span></p>
+        <p class="info">ISP: <span id="isp">Fetching...</span></p>
+        <p class="info">OS: <span id="os">Fetching...</span></p>
+        <p class="info">Browser: <span id="browser">Fetching...</span></p>
+        <p class="info">Screen: <span id="screen">Fetching...</span></p>
+        <p class="info">CPU Cores: <span id="cpuCores">Fetching...</span></p>
+        <p class="info">RAM: <span id="ram">Fetching...</span></p>
 
-    <p class="info">Latitude: <span id="latitude">N/A</span></p>
-    <p class="info">Longitude: <span id="longitude">N/A</span></p>
-
-    <div id="map"></div>
+        <h3>Live Location</h3>
+        <p class="info">Latitude: <span id="latitude">N/A</span></p>
+        <p class="info">Longitude: <span id="longitude">N/A</span></p>
+        <div id="map" style="display: none;"></div>
+    </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        let map, marker;
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.watchPosition(
-                    function(position) {
-                        let lat = position.coords.latitude;
-                        let lon = position.coords.longitude;
-                        document.getElementById('latitude').textContent = lat;
-                        document.getElementById('longitude').textContent = lon;
-
-                        if (!map) {
-                            map = L.map('map').setView([lat, lon], 15);
-                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                                attribution: '&copy; OpenStreetMap contributors'
-                            }).addTo(map);
-                        }
-
-                        if (marker) {
-                            marker.setLatLng([lat, lon]).bindPopup("Your Real-time Location").openPopup();
-                        } else {
-                            marker = L.marker([lat, lon]).addTo(map).bindPopup("Your Real-time Location").openPopup();
-                        }
-                    },
-                    function(error) {
-                        switch(error.code) {
-                            case error.PERMISSION_DENIED:
-                                alert("Location permission denied. Please allow access.");
-                                break;
-                            case error.POSITION_UNAVAILABLE:
-                                alert("Location data is unavailable.");
-                                break;
-                            case error.TIMEOUT:
-                                alert("Request timed out. Try again.");
-                                break;
-                            default:
-                                alert("An unknown error occurred.");
-                        }
-                    },
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                );
-            } else {
-                alert("Geolocation is not supported by your browser.");
-            }
-        }
-    </script>
-
+    <script src="script.js"></script>  <!-- Link External JavaScript -->
 </body>
 </html>
