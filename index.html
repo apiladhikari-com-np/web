@@ -140,13 +140,15 @@
         function getWeather(lat, lon) {
             const url = `https://weather-backend-cyw0g7qwk-black-annapurnas-projects.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
             console.log("Fetching weather from:", url);
-            fetch(url)
+            fetch(url, { method: 'GET' })
                 .then(response => {
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    console.log("Response status:", response.status);
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}, ${response.statusText}`);
                     return response.json();
                 })
                 .then(data => {
-                    console.log("Weather data:", data);
+                    console.log("Raw response data:", data);
+                    if (data.error) throw new Error(data.error);
                     const condition = data.condition;
                     const temp = data.temp;
                     const emoji = getWeatherEmoji(condition);
