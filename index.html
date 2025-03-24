@@ -6,7 +6,6 @@
     <title>Weather Adventure</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Same CSS as before */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
@@ -139,7 +138,7 @@
         }
 
         function getWeather(lat, lon) {
-            const url = `https://weather-backend-3txtwynft-black-annapurnas-projects.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
+            const url = `https://weather-backend-cyw0g7qwk-black-annapurnas-projects.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
             console.log("Fetching weather from:", url);
             fetch(url)
                 .then(response => {
