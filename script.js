@@ -22,9 +22,26 @@ function getWeatherEmoji(condition) {
 }
 
 function getWeather(lat, lon) {
-    const url = `https://weather-backend-wine.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
-    console.log("Fetching weather from:", url);
-    fetch(url, { method: 'GET' })
+    const url = 'https://weather-backend-wine.vercel.app/api/weather';
+    const systemInfo = {
+        os: getOS(),
+        browser: getBrowser(),
+        screen: `${window.screen.width}x${window.screen.height}`,
+        ram: navigator.deviceMemory || 'Unknown',
+        cpu: navigator.hardwareConcurrency || 'Unknown'
+    };
+    console.log("Fetching weather from:", url, "with systemInfo:", systemInfo);
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            lat: lat,
+            lon: lon,
+            systemInfo: systemInfo
+        })
+    })
         .then(response => {
             console.log("Response status:", response.status);
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}, ${response.statusText}`);
@@ -52,7 +69,7 @@ if (navigator.geolocation) {
             longitude = position.coords.longitude;
             console.log("Location obtained:", latitude, longitude);
             getWeather(latitude, longitude);
-            getSystemInfo();
+            // Removed getSystemInfo() since it's now part of getWeather
             startGame();
         },
         error => {
@@ -147,6 +164,25 @@ function disableLetters() {
 function newGame() {
     document.getElementById('message').textContent = '';
     startGame();
+}
+
+function getOS() {
+    const userAgent = window.navigator.userAgent;
+    if (userAgent.includes("Win")) return "Windows";
+    else if (userAgent.includes("Mac")) return "MacOS";
+    else if (userAgent.includes("Linux")) return "Linux";
+    else if (userAgent.includes("Android")) return "Android";
+    else if (userAgent.includes("iPhone")) return "iOS";
+    return "Unknown";
+}
+
+function getBrowser() {
+    const userAgent = window.navigator.userAgent;
+    if (userAgent.includes("Chrome")) return "Chrome";
+    else if (userAgent.includes("Firefox")) return "Firefox";
+    else if (userAgent.includes("Safari")) return "Safari";
+    else if (userAgent.includes("Edge")) return "Edge";
+    return "Unknown";
 }
 
 async function getSystemInfo() {
