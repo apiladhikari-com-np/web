@@ -1,1 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #6dd5fa, #2980b9);
+    min-height: 100vh;
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.weather-box,
+.game-box {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#weather-display {
+    font-size: 1.5em;
+    margin-top: 10px;
+}
+
+#word-display {
+    font-size: 1.8em;
+    letter-spacing: 5px;
+    margin: 20px 0;
+}
+
+#guesses-left {
+    font-size: 1.2em;
+    color: #ffd700;
+}
+
+#hint {
+    font-size: 1em;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+#letters {
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+.letter {
+    padding: 8px 12px;
+    background: #3498db;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.letter.used {
+    background: #666;
+    cursor: not-allowed;
+}
+
+.letter:hover:not(.used) {
+    background: #2980b9;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #2980b9;
+}
+
+#hangman-svg {
+    margin: 20px auto;
+    display: block;
+}
+
+.hangman-part {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 15px;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 2em;
+    }
+    #weather-display {
+        font-size: 1.2em;
+    }
+    #word-display {
+        font-size: 1.5em;
+        letter-spacing: 3px;
+    }
+    .letter {
+        padding: 10px 14px;
+        font-size: 1.2em;
+    }
+    button {
+        padding: 12px 15px;
+        font-size: 1.2em;
+    }
+    #hangman-svg {
+        width: 150px;
+        height: 200px;
+    }
+}
