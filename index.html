@@ -138,7 +138,7 @@
         }
 
         function getWeather(lat, lon) {
-            const url = `https://weather-backend-pd02utmt5-black-annapurnas-projects.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
+            const url = `https://weather-backend-wine.vercel.app/api/weather?lat=${lat}&lon=${lon}`;
             console.log("Fetching weather from:", url);
             fetch(url, { method: 'GET' })
                 .then(response => {
